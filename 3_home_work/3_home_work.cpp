@@ -4,14 +4,21 @@ template<class T>
 class vector {
 private:
     T* arr{};
+    
     int index = 0;
     int size = 0;
     int local_size = 1;
+
+    vector(const vector&) = delete;
+    vector operator=(const vector&) = delete;
 public:
 
      vector() {
         arr = new T[local_size]; 
 
+     }
+     ~vector() {
+         delete[] arr;
      }
     void  push_back(T value) {
         if (size == local_size) {
@@ -21,14 +28,8 @@ public:
                 arr_2[i] = arr[i];
             }
             delete[] arr;
-
-            arr = new T[local_size];
-            for (int i = 0; i < size; ++i) {
-                arr[i] = arr_2[i];
-               
-            }
+            arr = arr_2;
             arr[index] = value;
-            delete[] arr_2;
         }
         else {
             arr[index] = value;
